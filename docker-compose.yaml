@@ -1,0 +1,36 @@
+version: '3.10'
+
+services:
+  train:
+    image: vinaysripelli/testing_ci_cd:1.0
+    build:
+      context: train_
+      dockerfile: Dockerfile
+    volumes:
+      - model-data:/Model
+    ports:
+      - "8001:8080"
+    restart: on-failure
+    networks:
+      - scorpionet
+  inference:
+    image: vinaysripelli/infer_cd:1.0
+    build: 
+      context: inference_
+      dockerfile: Dockerfile
+    volumes:
+      - model-data:/Model
+    ports:
+      - "8089:8089"
+    restart: on-failure
+    networks:
+      - scorpionet
+
+volumes:
+  model-data:
+    name: my_model_volume_1
+
+networks:
+  scorpionet:
+    name: scorpionet
+    driver: bridge

@@ -1,0 +1,5 @@
+uvicorn[standard]
+skops
+numpy==1.23.5
+pydantic
+fastapi
